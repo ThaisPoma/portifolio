@@ -1,14 +1,39 @@
+/*   MODO ORIGINAL*/
+
+var hamburguer = document.querySelector(".hamburguer");
+
+hamburguer.addEventListener("click", function(){
+    document.querySelector(".container").classList.toggle("show-menu");
+}); 
+
+
+
 /*   MODO SIMPLIFICADO   */   
 document.querySelector(".hamburguer").addEventListener("click", () =>
     document.querySelector(".container").classList.toggle("show-menu")
 );
 
+document.querySelector("#qtde").addEventListener("change", atualizarPreco)
+document.querySelector("#js").addEventListener("change", atualizarPreco)
+document.querySelector("#layout-sim").addEventListener("change", atualizarPreco)
+document.querySelector("#layout-nao").addEventListener("change", atualizarPreco)
+document.querySelector("#prazo").addEventListener("change", function () {
+    const prazo = document.querySelector("#prazo").value
+    document.querySelector("label[for=prazo]").innerHTML = `Prazo: ${prazo} semanas` 
+    atualizarPreco()
+})
 
-/*   MODO ORIGINAL
+function atualizarPreco(){
+    const qtde = document.querySelector("#qtde").value
+    const temJS = document.querySelector("#js").checked
+    const incluiLayout = document.querySelector("#layout-sim").checked
+    const prazo = document.querySelector("#prazo").value
 
-    var hamburguer = document.querySelector(".hamburguer");
+    let preco = qtde * 100;
+    if (temJS) preco *= 1.1   /*Para os 10%   (preco * 10/100)*/
+    if (incluiLayout) preco += 500   /*O aumento de R$500 do Layout    preco = preco + 500*/
+    /*let taxaUrgencia = 1 - prazo*0.1;
+    preco *= 1 + taxaUrgencia   /*Sem contatenar   preco = 1 + (preco*taxaUrgencia)*/ 
 
-hamburguer.addEventListener("click", function(){
-    document.querySelector(".container").classList.toggle("show-menu");
-}); 
-*/
+    document.querySelector("#preco").innerHTML = `R$ ${preco.toFixed(2)}` /*OU   "R$ " + preco   E para mudar oq está no HTML*/
+}
